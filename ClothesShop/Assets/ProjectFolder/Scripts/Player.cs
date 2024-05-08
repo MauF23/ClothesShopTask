@@ -68,6 +68,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void StopMovement()
+    {
+        rigidbody2D.velocity = Vector2.zero;
+        animator.SetFloat(animatorSpeed, rigidbody2D.velocity.sqrMagnitude);
+    }
 
     private void Flip(bool value)
     {
@@ -84,5 +89,9 @@ public class Player : MonoBehaviour
     public void ToggleMovement(bool value)
     {
         canMove = value;
+        if (!value)
+        {
+            StopMovement();
+        }
     }
 }

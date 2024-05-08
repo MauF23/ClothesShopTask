@@ -72,7 +72,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Update()
     {
-        if (inputManager.Inventory() && player.canMove)
+        if (inputManager.Inventory() /*&& player.canMove*/)
         {
             ToggleInventoryCanvas(!inventoryUI);
         }
@@ -127,6 +127,7 @@ public class PlayerInventory : MonoBehaviour
         inventoryUI = value;
         playerInventoryCanvas.blocksRaycasts = value;
         playerInventoryCanvas.interactable = value;
+        player.ToggleMovement(!value);
 
         if (value)
         {
