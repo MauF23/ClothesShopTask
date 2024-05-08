@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.Pool;
-using TMPro;
 
 public class ShopUI : MonoBehaviour
 {
@@ -24,7 +23,7 @@ public class ShopUI : MonoBehaviour
     const string sellInstructions = "What are you selling?";
     const string confirmBuy = "Buy:";
     const string confirmSell = "Sell:";
-    const string balanceText = "Balance:";
+    const string balanceText = "Gold:";
     const float fadeTime = 0.25f;
     public static ShopUI instance;
     private PlayerInventory playerInventory;
@@ -172,7 +171,7 @@ public class ShopUI : MonoBehaviour
 
     private void UpdateBalanceText()
     {
-        walletText.text = ($"{balanceText} {playerInventory.inventory.wallet.ToString()}");
+        walletText.text = ($"{balanceText} {playerInventory.GetInventoryWallet()}");
     }
     private void PoolButton()
     {

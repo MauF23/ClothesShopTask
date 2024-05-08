@@ -18,7 +18,7 @@ public class Shop : MonoBehaviour
     {
         playerInventory = PlayerInventory.instance;
         shopUI = ShopUI.instance;
-        shopTrigger.SetShop(this);
+        shopTrigger.shop = this;
     }
 
     public void SelectClothes(Clothes clothes)

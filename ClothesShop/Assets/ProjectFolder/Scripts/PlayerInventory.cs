@@ -4,21 +4,22 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using DG.Tweening;
 using UnityEngine.Pool;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerInventory : MonoBehaviour
 {
-    //public int wallet;
+
     public CanvasGroup playerInventoryCanvas;
     public Transform playerInventoryContainer;
-    private ObjectPool<GameObject> clothesButtonPool;
-    //public List<Clothes> playerClothes;
     public Inventory inventory;
-    //private Clothes equippedClothes;
-    private Clothes equippedClothesPelvis, equippedClothesTorso, equippedClothesHood;
     public List<ClothesInventoryButton> clothesInventoryButtonList;
     public GameObject clothesInventoryButtonPrefab;
+    public TextMeshProUGUI walletText;
     public SpriteRenderer pelvis, torso, hood;
-    //public enum walletBallanceModifier {add, remove}
+    private Clothes equippedClothesPelvis, equippedClothesTorso, equippedClothesHood;
+    private ObjectPool<GameObject> clothesButtonPool;
+
 
     [ReadOnly]
     public Shop currentShop;
@@ -30,6 +31,12 @@ public class PlayerInventory : MonoBehaviour
     const float fadeTime = 0.25f;
     public static PlayerInventory instance;
     private InputManager inputManager;
+    private bool _blockInventory;
+    public bool blockInventory
+    {
+        get { return _blockInventory; }
+        set { _blockInventory = value; }
+    }
 
     void Awake()
     {
@@ -46,6 +53,7 @@ public class PlayerInventory : MonoBehaviour
         player = Player.instance;
         playerInventoryCanvas.alpha = 0;
         ToggleInventoryCanvas(false);
+        blockInventory = false;
 
         clothesButtonPool = new ObjectPool<GameObject>(() =>
         {
@@ -72,7 +80,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Update()
     {
-        if (inputManager.Inventory() /*&& player.canMove*/)
+        if (inputManager.Inventory() && !blockInventory)
         {
             ToggleInventoryCanvas(!inventoryUI);
         }
@@ -91,6 +99,7 @@ public class PlayerInventory : MonoBehaviour
     public void ModifyWalletBalance(int value, Inventory.walletBallanceModifier modifier)
     {
         inventory.ModifyWalletBalance(value, modifier);
+        UpdateWalletText();
     }
 
     public void InitializeStore()
@@ -133,6 +142,7 @@ public class PlayerInventory : MonoBehaviour
         {
             playerInventoryCanvas.DOFade(1, fadeTime);
             SetClothesButton();
+            UpdateWalletText();
         }
         else
         {
@@ -159,17 +169,6 @@ public class PlayerInventory : MonoBehaviour
                 equippedClothesHood = clothes;
                 break;
         }
-
-
-        //equippedClothes = clothes;
-    }
-
-    private void PoolButton()
-    {
-        GameObject go = clothesButtonPool.Get();
-        go.transform.SetParent(playerInventoryContainer, false);
-        ClothesInventoryButton button = go.GetComponent<ClothesInventoryButton>();
-        clothesInventoryButtonList.Add(button);
     }
 
     public void SetClothesButton()
@@ -189,6 +188,19 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    public int GetInventoryWallet()
+    {
+        return inventory.wallet;
+    }
+
+    private void PoolButton()
+    {
+        GameObject go = clothesButtonPool.Get();
+        go.transform.SetParent(playerInventoryContainer, false);
+        ClothesInventoryButton button = go.GetComponent<ClothesInventoryButton>();
+        clothesInventoryButtonList.Add(button);
+    }
+
     private void EquipStartingClothes()
     {
         if(inventory.clothes.Count > 0)
@@ -196,4 +208,10 @@ public class PlayerInventory : MonoBehaviour
             ChangeClothes(inventory.clothes[0]);
         }
     }
+
+    private void UpdateWalletText()
+    {
+        walletText.text = $"Gold: {GetInventoryWallet()}";
+    }
+    
 }

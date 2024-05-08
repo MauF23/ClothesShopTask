@@ -2,40 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopTrigger : MonoBehaviour
+public class ShopTrigger : DialogTrigger
 {
-    public string greeting;
-    private Player player;
-    private Shop shop;
+    public Shop shop { get; set; }
     private PlayerInventory playerInventory;
     private ShopDialog shopDialog;
-    void Start()
+
+    protected override void Start()
     {
+        base.Start();
         playerInventory = PlayerInventory.instance;
+        dialog = ShopDialog.instance;
         shopDialog = ShopDialog.instance;
-    }
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        player = col.GetComponent<Player>();
-        if(player != null)
+        shopDialog.onForceCloseDialogEvent += delegate
         {
-            shopDialog.SetDialog(greeting, shop);
-        }
+            spriteHint.ToggleHint(true);
+        };
     }
 
-    void OnTriggerExit2D(Collider2D col)
+    protected override void OnTriggerEnter2D(Collider2D col)
+    {
+        base.OnTriggerEnter2D(col);
+        shopDialog.SetShop(shop);
+    }
+
+    protected override void OnTriggerExit2D(Collider2D col)
     {
         ResetTrigger();
-    }
-
-    public void ResetTrigger()
-    {
-        player = null;
-        shopDialog.ToggleDialog(false);
-    }
-    public void SetShop(Shop shop)
-    {
-        this.shop = shop;
     }
 }

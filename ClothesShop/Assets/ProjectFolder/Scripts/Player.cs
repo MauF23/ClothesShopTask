@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public float speed;
     public Rigidbody2D rigidbody2D;
     public Animator animator;
+    public Transform playerSpriteTransform;
     private float movementX, movementY;
     private Vector2 movement;
     [ReadOnly]
@@ -29,7 +30,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         ToggleMovement(true);
-        originalScale = transform.localScale;
+        originalScale = playerSpriteTransform.localScale;
         inputManager = InputManager.Instance;
     }
 
@@ -78,11 +79,11 @@ public class Player : MonoBehaviour
     {
         if (value)
         {
-            transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+            playerSpriteTransform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
         }
         else
         {
-            transform.localScale = originalScale;
+            playerSpriteTransform.localScale = originalScale;
         }
     }
 
