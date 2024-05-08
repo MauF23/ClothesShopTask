@@ -2374,6 +2374,7 @@ MonoBehaviour:
   clothesInventoryButtonList: []
   clothesInventoryButtonPrefab: {fileID: 4616002410840927560, guid: 6d4dbf459336fa04ab1121d142791f25, type: 3}
   walletText: {fileID: 1750781186}
+  closeButton: {fileID: 565572389}
   pelvis: {fileID: 640389564}
   torso: {fileID: 2094787451}
   hood: {fileID: 1144303923}
@@ -5416,6 +5417,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1347973511}
+  - component: {fileID: 1347973512}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -5438,6 +5440,54 @@ Transform:
   m_Father: {fileID: 393937419}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1347973512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347973510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d785965e5093d6f438c698e36af0e3b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundList:
+  - audioName: s_click
+    audioClip: {fileID: 8300000, guid: de30804d9a9da5545b5d25791d898a60, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioName: s_displayUI
+    audioClip: {fileID: 8300000, guid: 0f0c4b32d0e97154fb11a2829ae121e1, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioName: s_purchase
+    audioClip: {fileID: 8300000, guid: 6576bd4bd16acc643a70601bf7102f8b, type: 3}
+    volume: 0.85
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioName: s_levelTheme
+    audioClip: {fileID: 8300000, guid: f976e9cda6e2ee447b2efbfb5df4b0dd, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
+  - audioName: s_sale
+    audioClip: {fileID: 8300000, guid: 4bbc9e3a58225214cae84a0518bfb67a, type: 3}
+    volume: 0.85
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    source: {fileID: 0}
 --- !u!1 &1371821265
 GameObject:
   m_ObjectHideFlags: 0

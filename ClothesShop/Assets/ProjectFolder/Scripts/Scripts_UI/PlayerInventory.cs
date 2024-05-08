@@ -16,10 +16,11 @@ public class PlayerInventory : MonoBehaviour
     public List<ClothesInventoryButton> clothesInventoryButtonList;
     public GameObject clothesInventoryButtonPrefab;
     public TextMeshProUGUI walletText;
+    public Button closeButton;
     public SpriteRenderer pelvis, torso, hood;
     private Clothes equippedClothesPelvis, equippedClothesTorso, equippedClothesHood;
     private ObjectPool<GameObject> clothesButtonPool;
-
+    private SoundManager soundManager;
 
     [ReadOnly]
     public Shop currentShop;
@@ -49,6 +50,7 @@ public class PlayerInventory : MonoBehaviour
     void Start()
     {
         inputManager = InputManager.Instance;
+        soundManager = SoundManager.instance;
         shopUI = ShopUI.instance;
         player = Player.instance;
         playerInventoryCanvas.alpha = 0;
@@ -76,6 +78,7 @@ public class PlayerInventory : MonoBehaviour
 
         SetClothesButton();
         EquipStartingClothes();
+        closeButton.onClick.AddListener(()=> soundManager.PlaySound("s_click"));
     }
 
     void Update()
@@ -83,6 +86,7 @@ public class PlayerInventory : MonoBehaviour
         if (inputManager.Inventory() && !blockInventory)
         {
             ToggleInventoryCanvas(!inventoryUI);
+            soundManager.PlaySound("s_displayUI");
         }
     }
 

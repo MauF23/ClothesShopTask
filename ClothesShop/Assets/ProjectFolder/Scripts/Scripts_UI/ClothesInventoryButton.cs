@@ -12,10 +12,12 @@ public class ClothesInventoryButton : MonoBehaviour
     public Button button;
     public TextMeshProUGUI nameText;
     private PlayerInventory playerInventory;
+    private SoundManager soundManager;
 
     void Start()
     {
         playerInventory = PlayerInventory.instance;
+        soundManager = SoundManager.instance;
     }
 
     public void SetButton(Clothes clothes)
@@ -25,6 +27,10 @@ public class ClothesInventoryButton : MonoBehaviour
         nameText.text = name;
         buttonIcon.sprite = clothes.clotheSprite;
         button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(delegate { playerInventory.ChangeClothes(this.clothes); });
+        button.onClick.AddListener(delegate 
+        { 
+            playerInventory.ChangeClothes(this.clothes);
+            soundManager.PlaySound("s_click");
+        });
     }
 }

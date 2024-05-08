@@ -13,11 +13,12 @@ public class Dialog : MonoBehaviour
     public TextMeshProUGUI dialog;
     public event Action onDisplayDialogueEvent, onCloseDialogueEvent, onForceCloseDialogEvent;
     protected PlayerInventory playerInventory;
-
+    protected SoundManager soundManager;
 
     protected virtual void Start()
     {
         playerInventory = PlayerInventory.instance;
+        soundManager = SoundManager.instance;   
         canvasGroup.alpha = 0;
         ToggleDialog(false);
     }
@@ -35,6 +36,7 @@ public class Dialog : MonoBehaviour
         canvasGroup.blocksRaycasts = value;
         canvasGroup.interactable = value;
         playerInventory.blockInventory = value;
+        soundManager.PlaySound("s_displayUI");
 
         if (value)
         {

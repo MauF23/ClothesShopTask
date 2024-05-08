@@ -11,9 +11,15 @@ public class SoundManager : MonoBehaviour
 {
     public List<Sound> soundList;
     private const float defaultFadeTime = 0.5f;
+    public static SoundManager instance;
 
     void Awake()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
+
         for(int i = 0; i < soundList.Count; i++)
         {
             Sound sound = soundList[i];

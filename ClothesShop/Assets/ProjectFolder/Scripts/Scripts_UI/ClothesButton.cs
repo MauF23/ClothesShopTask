@@ -12,10 +12,12 @@ public class ClothesButton : MonoBehaviour
     public Button button;
     private Shop shop;
     private ShopUI shopUI;
+    private SoundManager soundManager;
 
     void Start()
     {
         shopUI = ShopUI.instance;
+        soundManager = SoundManager.instance;   
     }
     public void SetClothesButton(Clothes clothes, Shop shop)
     {
@@ -30,6 +32,10 @@ public class ClothesButton : MonoBehaviour
     private void AddButtonListeners()
     {
         button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(delegate { shop.SelectClothes(clothes); shopUI.ToggleConfirmationPanel(true, name); });
+        button.onClick.AddListener(delegate 
+        {
+            shop.SelectClothes(clothes); shopUI.ToggleConfirmationPanel(true, name);
+            soundManager.PlaySound("s_click");
+        });
     }
 }

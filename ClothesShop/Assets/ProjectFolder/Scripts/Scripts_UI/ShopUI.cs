@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.Pool;
+using System;
 
 public class ShopUI : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class ShopUI : MonoBehaviour
     private PlayerInventory playerInventory;
     private Player player;
     private ShopDialog shopDialog;
+    private SoundManager soundManager;
 
     void Awake()
     {
@@ -40,6 +42,7 @@ public class ShopUI : MonoBehaviour
 
     void Start()
     {
+        soundManager = SoundManager.instance;
         playerInventory = PlayerInventory.instance;
         shopDialog = ShopDialog.instance;
         player = Player.instance;
@@ -70,6 +73,7 @@ public class ShopUI : MonoBehaviour
         canvasGroupConfirmation.alpha = 0;
         ToggleShopUI(false);
         ToggleConfirmationPanel(false, null);
+        SetSounds();
     }
 
     public void SetClothesButton(List<Clothes> clothes, Shop shop, TransactionType transactionType)
@@ -181,5 +185,11 @@ public class ShopUI : MonoBehaviour
         clothesButtonList.Add(button);
     }
 
-
+    private void SetSounds()
+    {
+        Action clickSound = ()=>{soundManager.PlaySound("s_click");};
+        confirmBuyButton.onClick.AddListener(() => clickSound?.Invoke());
+        cancelButton.onClick.AddListener(() => clickSound?.Invoke());
+        closeShopButton.onClick.AddListener(() => clickSound?.Invoke());
+    }
 }

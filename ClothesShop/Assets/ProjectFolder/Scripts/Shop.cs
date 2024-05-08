@@ -13,10 +13,12 @@ public class Shop : MonoBehaviour
     public ShopTrigger shopTrigger;
     private PlayerInventory playerInventory;
     private ShopUI shopUI;
+    private SoundManager soundManager;
 
     void Start()
     {
         playerInventory = PlayerInventory.instance;
+        soundManager = SoundManager.instance;   
         shopUI = ShopUI.instance;
         shopTrigger.shop = this;
     }
@@ -32,10 +34,11 @@ public class Shop : MonoBehaviour
         {
             if (playerInventory.inventory.wallet - selectedClothes.price < 0)
             {
-                //can't buy clothes
+                return;
             }
             else
             {
+                soundManager.PlaySound("s_purchase");
                 playerInventory.ModifyWalletBalance(selectedClothes.price, Inventory.walletBallanceModifier.remove);
                 playerInventory.AddClothes(selectedClothes);
                 shopInventory.RemoveClothes(selectedClothes);
@@ -48,6 +51,7 @@ public class Shop : MonoBehaviour
     {
         if (selectedClothes != null)
         {
+            soundManager.PlaySound("s_sale");
             playerInventory.ModifyWalletBalance(selectedClothes.price, Inventory.walletBallanceModifier.add);
             playerInventory.RemoveClothes(selectedClothes);
             shopInventory.AddClothes(selectedClothes);
