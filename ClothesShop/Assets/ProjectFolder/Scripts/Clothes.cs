@@ -5,9 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newClothes", menuName = "Clothes")]
 public class Clothes:ScriptableObject
 {
+    public enum ClothesType {pelvis, torso, hood}
+    public ClothesType clothesType;
     public new string name;
     public int price;
-    public Sprite icon;
-    public Sprite pelvis, torso, hood;
+    public Sprite clotheSprite;
+    //public Sprite icon;
+    //public Sprite pelvis, torso, hood;
     private bool equiped;
 }

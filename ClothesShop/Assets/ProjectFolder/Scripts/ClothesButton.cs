@@ -20,7 +20,7 @@ public class ClothesButton : MonoBehaviour
     public void SetClothesButton(Clothes clothes, Shop shop)
     {
         this.clothes = clothes;
-        buttonIcon.sprite = clothes.icon;
+        buttonIcon.sprite = clothes.clotheSprite;
         name = clothes.name;
         priceText.text = ($"{name}: ${clothes.price.ToString()}");
         this.shop = shop;

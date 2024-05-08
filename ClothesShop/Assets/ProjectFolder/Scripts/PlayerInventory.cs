@@ -13,7 +13,8 @@ public class PlayerInventory : MonoBehaviour
     private ObjectPool<GameObject> clothesButtonPool;
     //public List<Clothes> playerClothes;
     public Inventory inventory;
-    private Clothes equippedClothes;
+    //private Clothes equippedClothes;
+    private Clothes equippedClothesPelvis, equippedClothesTorso, equippedClothesHood;
     public List<ClothesInventoryButton> clothesInventoryButtonList;
     public GameObject clothesInventoryButtonPrefab;
     public SpriteRenderer pelvis, torso, hood;
@@ -102,7 +103,9 @@ public class PlayerInventory : MonoBehaviour
                 sellableClothes.Add(inventory.clothes[i]);
             }
 
-            sellableClothes.Remove(equippedClothes);
+            sellableClothes.Remove(equippedClothesPelvis);
+            sellableClothes.Remove(equippedClothesTorso);
+            sellableClothes.Remove(equippedClothesHood);
 
             shopUI.SetClothesButton(sellableClothes, currentShop, ShopUI.TransactionType.sell);
         }
@@ -138,11 +141,26 @@ public class PlayerInventory : MonoBehaviour
 
     public void ChangeClothes(Clothes clothes)
     {
-        pelvis.sprite = clothes.pelvis;
-        torso.sprite = clothes.torso;
-        hood.sprite = clothes.hood;
+        switch (clothes.clothesType)
+        {
+            case Clothes.ClothesType.pelvis:
+                pelvis.sprite = clothes.clotheSprite;
+                equippedClothesPelvis = clothes;
+                break;
 
-        equippedClothes = clothes;
+            case Clothes.ClothesType.torso:
+                torso.sprite = clothes.clotheSprite;
+                equippedClothesTorso = clothes;
+                break;
+
+            case Clothes.ClothesType.hood:
+                hood.sprite = clothes.clotheSprite;
+                equippedClothesHood = clothes;
+                break;
+        }
+
+
+        //equippedClothes = clothes;
     }
 
     private void PoolButton()

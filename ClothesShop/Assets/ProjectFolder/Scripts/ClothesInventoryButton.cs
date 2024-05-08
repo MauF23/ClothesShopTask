@@ -23,7 +23,7 @@ public class ClothesInventoryButton : MonoBehaviour
         this.clothes = clothes;
         name = clothes.name;
         nameText.text = name;
-        buttonIcon.sprite = clothes.icon;
+        buttonIcon.sprite = clothes.clotheSprite;
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(delegate { playerInventory.ChangeClothes(this.clothes); });
     }
