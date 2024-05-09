@@ -28,7 +28,7 @@ public class Dialog : MonoBehaviour
         this.dialog.text = dialog;
         canvasGroup.blocksRaycasts = true;
         canvasGroup.interactable = true;
-        //canvasGroup.DOFade(1, fadeTime);
+
     }
 
     public virtual void ToggleDialog(bool value)

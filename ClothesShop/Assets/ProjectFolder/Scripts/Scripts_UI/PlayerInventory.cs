@@ -6,6 +6,8 @@ using DG.Tweening;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
+using System.Linq;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class PlayerInventory : MonoBehaviour
     public TextMeshProUGUI walletText;
     public Button closeButton;
     public SpriteRenderer pelvis, torso, hood;
+    public SaveManager saveManager;
     private Clothes equippedClothesPelvis, equippedClothesTorso, equippedClothesHood;
     private ObjectPool<GameObject> clothesButtonPool;
     private SoundManager soundManager;
@@ -38,6 +41,8 @@ public class PlayerInventory : MonoBehaviour
         get { return _blockInventory; }
         set { _blockInventory = value; }
     }
+
+    private const string equippedClothesKey = "playerEquippedPath";
 
     void Awake()
     {
@@ -77,8 +82,9 @@ public class PlayerInventory : MonoBehaviour
         }
 
         SetClothesButton();
-        EquipStartingClothes();
         closeButton.onClick.AddListener(()=> soundManager.PlaySound("s_click"));
+        LoadInventory();
+        LoadEquippedClothes();
     }
 
     void Update()
@@ -93,11 +99,13 @@ public class PlayerInventory : MonoBehaviour
     public void AddClothes(Clothes clothes)
     {
         inventory.AddClothes(clothes);
+        saveManager.SaveInventory(inventory.clothes, inventory.wallet);
     }
 
     public void RemoveClothes(Clothes clothes)
     {
         inventory.RemoveClothes(clothes);
+        saveManager.SaveInventory(inventory.clothes, inventory.wallet);
     }
 
     public void ModifyWalletBalance(int value, Inventory.walletBallanceModifier modifier)
@@ -156,6 +164,8 @@ public class PlayerInventory : MonoBehaviour
 
     public void ChangeClothes(Clothes clothes)
     {
+        List<Clothes> equippedClothes = new List<Clothes>();
+
         switch (clothes.clothesType)
         {
             case Clothes.ClothesType.pelvis:
@@ -173,6 +183,12 @@ public class PlayerInventory : MonoBehaviour
                 equippedClothesHood = clothes;
                 break;
         }
+
+        equippedClothes.Add(equippedClothesPelvis);
+        equippedClothes.Add(equippedClothesTorso);
+        equippedClothes.Add(equippedClothesHood);
+
+        saveManager.SaveClothes(equippedClothes, equippedClothesKey);
     }
 
     public void SetClothesButton()
@@ -217,5 +233,40 @@ public class PlayerInventory : MonoBehaviour
     {
         walletText.text = $"Gold: {GetInventoryWallet()}";
     }
-    
+
+    private void LoadInventory()
+    {
+        List<Clothes> clothesList = saveManager.LoadClothes();
+
+        if(clothesList != null)
+        {
+            inventory.clothes = clothesList;
+        }
+
+        int wallet = saveManager.LoadWallet();
+        if(wallet > 0)
+        {
+            inventory.wallet = wallet;
+        }
+    }
+
+    private void LoadEquippedClothes()
+    {
+        List<Clothes> clothes = saveManager.LoadClothes(equippedClothesKey);
+
+        if (clothes != null)
+        {
+            for (int i = 0; i < clothes.Count; i++)
+            {
+                if (clothes[i] != null)
+                {
+                    ChangeClothes(clothes[i]);
+                }
+            }
+        }
+        else
+        {
+            EquipStartingClothes();
+        }
+    }
 }
