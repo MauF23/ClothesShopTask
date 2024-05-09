@@ -77,6 +77,7 @@ public class SaveManager : MonoBehaviour
     private void DeleteAllSavedData()
     {
         PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
     }
 
     private void SaveWallet(int amount)
