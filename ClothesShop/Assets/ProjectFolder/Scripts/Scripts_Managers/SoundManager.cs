@@ -28,7 +28,13 @@ public class SoundManager : MonoBehaviour
             sound.source.volume = sound.volume;
             sound.source.pitch = sound.pitch;
             sound.source.loop = sound.loop;
-            sound.source.playOnAwake = sound.playOnAwake;
+
+            //Setting the playOnAwake does not automatically makes the created AudioSource to play the sound, so I'll force it to Start
+            if (sound.playOnAwake)
+            {
+                sound.source.playOnAwake = sound.playOnAwake;
+                sound.source.Play();
+            }
         }
     }
 

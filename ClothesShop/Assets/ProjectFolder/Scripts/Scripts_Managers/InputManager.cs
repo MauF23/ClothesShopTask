@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager Instance;
+    public static InputManager instance;
     void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;    
+            instance = this;    
         }
     }
 
@@ -26,5 +26,10 @@ public class InputManager : MonoBehaviour
     public bool Interact()
     {
         return Input.GetButtonDown("Interact");
+    }
+
+    public bool Pause()
+    {
+        return Input.GetButtonDown("Cancel");
     }
 }

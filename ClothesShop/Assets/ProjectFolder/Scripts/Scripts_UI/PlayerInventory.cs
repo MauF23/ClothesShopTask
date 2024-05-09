@@ -49,7 +49,7 @@ public class PlayerInventory : MonoBehaviour
 
     void Start()
     {
-        inputManager = InputManager.Instance;
+        inputManager = InputManager.instance;
         soundManager = SoundManager.instance;
         shopUI = ShopUI.instance;
         player = Player.instance;

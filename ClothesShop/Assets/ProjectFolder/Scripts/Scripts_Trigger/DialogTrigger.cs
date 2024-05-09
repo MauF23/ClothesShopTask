@@ -15,7 +15,7 @@ public class DialogTrigger : MonoBehaviour
 
     protected virtual void Start()
     {
-        inputManager = InputManager.Instance;
+        inputManager = InputManager.instance;
     }
 
     protected virtual void Update()

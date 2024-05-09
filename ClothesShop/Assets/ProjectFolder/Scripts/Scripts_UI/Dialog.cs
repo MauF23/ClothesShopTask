@@ -36,12 +36,12 @@ public class Dialog : MonoBehaviour
         canvasGroup.blocksRaycasts = value;
         canvasGroup.interactable = value;
         playerInventory.blockInventory = value;
-        soundManager.PlaySound("s_displayUI");
 
         if (value)
         {
             canvasGroup.DOFade(1, fadeTime).OnComplete(delegate { onDisplayDialogueEvent?.Invoke(); });
             playerInventory.ToggleInventoryCanvas(false);
+            soundManager.PlaySound("s_displayUI");
         }
         else
         {

@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
     {
         ToggleMovement(true);
         originalScale = playerSpriteTransform.localScale;
-        inputManager = InputManager.Instance;
+        inputManager = InputManager.instance;
     }
 
     private void Update()
